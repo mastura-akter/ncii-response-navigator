@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCII Response Navigator — Prototype</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+:root{
+  --bg:#FAFAF8;
+  --panel:#FFFFFF;
+  --ink:#16232A;
+  --ink-soft:#4A5860;
+  --primary:#1B4B43;
+  --primary-tint:#E7EFEC;
+  --amber:#96591A;
+  --amber-tint:#FBF0E1;
+  --brick:#8C3B34;
+  --brick-tint:#F7E9E7;
+  --line:#DFE3E0;
+  --line-soft:#EDEFEC;
+  --radius:10px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'IBM Plex Sans', sans-serif;
+  font-size:15px;
+  line-height:1.55;
+}
+.app{
+  display:flex;
+  min-height:100vh;
+}
+.rail{
+  width:280px;
+  flex-shrink:0;
+  background:var(--panel);
+  border-right:1px solid var(--line);
+  padding:28px 22px;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+}
+.brand{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:19px;
+  color:var(--primary);
+  line-height:1.3;
+  margin-bottom:4px;
+}
+.brand-sub{
+  font-size:12.5px;
+  color:var(--ink-soft);
+  margin-bottom:22px;
+}
+.privacy-badge{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+  background:var(--primary-tint);
+  border-radius:var(--radius);
+  padding:11px 12px;
+  font-size:12px;
+  color:var(--primary);
+  margin-bottom:26px;
+}
+.privacy-badge svg{flex-shrink:0;margin-top:1px;}
+.steps{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.step-item{
+  display:flex;
+  gap:12px;
+  padding:12px 8px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  margin-bottom:2px;
+  transition:background .15s ease;
+}
+.step-item:hover{background:var(--line-soft);}
+.step-item.active{background:var(--primary-tint);}
+.step-num{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  border:1.5px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:600;
+  flex-shrink:0;
+  color:var(--ink-soft);
+  background:var(--panel);
+}
+.step-item.active .step-num{
+  background:var(--primary);
+  border-color:var(--primary);
+  color:#fff;
+}
+.step-item.done .step-num{
+  background:var(--primary);
+  border-color:var(--primary);
+  color:#fff;
+}
+.step-text-title{
+  font-size:13.5px;
+  font-weight:600;
+  color:var(--ink);
+}
+.step-item.active .step-text-title{color:var(--primary);}
+.step-text-sub{
+  font-size:11.5px;
+  color:var(--ink-soft);
+  margin-top:1px;
+}
+.main{
+  flex:1;
+  padding:40px 48px 80px;
+  max-width:860px;
+}
+.eyebrow{
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-bottom:6px;
+}
+h1{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:28px;
+  margin:0 0 8px;
+  color:var(--ink);
+}
+.lede{
+  color:var(--ink-soft);
+  font-size:14.5px;
+  max-width:62ch;
+  margin-bottom:28px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px 24px;
+  margin-bottom:18px;
+}
+.card h3{
+  font-size:14.5px;
+  font-weight:600;
+  margin:0 0 14px;
+}
+.check-row{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid var(--line-soft);
+  cursor:pointer;
+}
+.check-row:last-child{border-bottom:none;}
+.check-row input{margin-top:3px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0;}
+.check-row label{cursor:pointer;font-size:14px;}
+.flag-note{
+  display:none;
+  margin-top:12px;
+  background:var(--brick-tint);
+  color:var(--brick);
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:12.5px;
+}
+.flag-note.show{display:block;}
+.field{margin-bottom:14px;}
+.field label{
+  display:block;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--ink-soft);
+  margin-bottom:5px;
+}
+.field input[type=text], .field textarea, .field select{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:9px 11px;
+  font-family:inherit;
+  font-size:14px;
+  color:var(--ink);
+  background:#fff;
+}
+.field textarea{resize:vertical;min-height:64px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:10px 18px;
+  font-size:14px;
+  font-weight:500;
+  font-family:inherit;
+  cursor:pointer;
+}
+.btn:hover{background:#153B35;}
+.btn.secondary{
+  background:transparent;
+  color:var(--primary);
+  border:1px solid var(--primary);
+}
+.btn.secondary:hover{background:var(--primary-tint);}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.nav-buttons{
+  display:flex;
+  justify-content:space-between;
+  margin-top:28px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  margin-top:6px;
+}
+th{
+  text-align:left;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  color:var(--ink-soft);
+  border-bottom:1px solid var(--line);
+  padding:8px 6px;
+  font-weight:600;
+}
+td{
+  padding:9px 6px;
+  border-bottom:1px solid var(--line-soft);
+  vertical-align:top;
+}
+.hash{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  color:var(--primary);
+}
+.empty{
+  color:var(--ink-soft);
+  font-size:13px;
+  font-style:italic;
+  padding:10px 0;
+}
+.timeline{
+  position:relative;
+  padding-left:26px;
+}
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:8px;
+  top:6px;
+  bottom:6px;
+  width:1.5px;
+  background:var(--line);
+}
+.tl-item{
+  position:relative;
+  padding-bottom:22px;
+}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot{
+  position:absolute;
+  left:-26px;
+  top:2px;
+  width:17px;
+  height:17px;
+  border-radius:50%;
+  background:var(--primary);
+  color:#fff;
+  font-size:9.5px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tl-title{font-weight:600;font-size:13.5px;}
+.tl-body{color:var(--ink-soft);font-size:12.8px;margin-top:2px;}
+.tl-item.urgent .tl-dot{background:var(--brick);}
+.pill{
+  display:inline-block;
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:20px;
+  background:var(--amber-tint);
+  color:var(--amber);
+  margin-left:8px;
+  font-weight:600;
+}
+.brief-preview{
+  background:#F4F5F3;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:16px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.8px;
+  white-space:pre-wrap;
+  max-height:340px;
+  overflow-y:auto;
+  line-height:1.6;
+}
+.status-line{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12.5px;
+  color:var(--primary);
+  margin-top:10px;
+}
+.note{
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-top:10px;
+  border-left:2px solid var(--line);
+  padding-left:10px;
+}
+@media (max-width: 760px){
+  .app{flex-direction:column;}
+  .rail{width:100%;height:auto;position:relative;border-right:none;border-bottom:1px solid var(--line);}
+  .main{padding:28px 20px 60px;}
+  .row2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <div class="rail">
+    <div class="brand">NCII Response<br>Navigator</div>
+    <div class="brand-sub">Prototype implementation of the Victim-Centred Legal Response Framework</div>
+    <div class="privacy-badge">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5l-8-3z" stroke="currentColor" stroke-width="1.6"/></svg>
+      <span>Runs entirely in this browser tab. Nothing is uploaded or stored on a server.</span>
+    </div>
+    <ul class="steps" id="stepList"></ul>
+  </div>
+
+  <div class="main" id="main"></div>
+
+</div>
+
+<script>
+const state = {
+  step: 0,
+  assessment: {
+    threatened:false, shared:false, groupchat:false, unsure:false,
+    knownPerson:false, minorInvolved:false
+  },
+  evidence: [],
+  disclosure: { police:true, legal:true, platform:false, keepPrivate:false }
+};
+
+const steps = [
+  {key:'assess', title:'Situation Assessment', sub:'What has happened so far'},
+  {key:'evidence', title:'Evidence Record & Integrity', sub:'Log evidence, generate hash'},
+  {key:'timeline', title:'Incident Timeline', sub:'Recommended response path'},
+  {key:'brief', title:'Case Brief Generation', sub:'Compile a structured record'},
+  {key:'disclosure', title:'Selective Disclosure', sub:'Choose what to share, with whom'}
+];
+
+function renderRail(){
+  const list = document.getElementById('stepList');
+  list.innerHTML = steps.map((s,i)=>`
+    <li class="step-item ${i===state.step?'active':''} ${i<state.step?'done':''}" onclick="goTo(${i})">
+      <div class="step-num">${i<state.step?'✓':i+1}</div>
+      <div>
+        <div class="step-text-title">${s.title}</div>
+        <div class="step-text-sub">${s.sub}</div>
+      </div>
+    </li>`).join('');
+}
+
+function goTo(i){ state.step = i; render(); }
+function next(){ if(state.step<steps.length-1){state.step++; render();} }
+function back(){ if(state.step>0){state.step--; render();} }
+
+async function sha256(text){
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function fmtTime(d){
+  return d.toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+
+function renderMain(){
+  const el = document.getElementById('main');
+  if(state.step===0) el.innerHTML = viewAssess();
+  if(state.step===1) el.innerHTML = viewEvidence();
+  if(state.step===2) el.innerHTML = viewTimeline();
+  if(state.step===3) el.innerHTML = viewBrief();
+  if(state.step===4) el.innerHTML = viewDisclosure();
+  wireEvents();
+}
+
+function render(){ renderRail(); renderMain(); }
+
+// ---------- STEP 1 ----------
+function viewAssess(){
+  const a = state.assessment;
+  const row = (key,label) => `
+    <div class="check-row" data-key="${key}">
+      <input type="checkbox" id="chk_${key}" ${a[key]?'checked':''}>
+      <label for="chk_${key}">${label}</label>
+    </div>`;
+  return `
+    <div class="eyebrow">STEP 1 OF 5</div>
+    <h1>Situation Assessment</h1>
+    <p class="lede">Select everything that applies right now. Nothing here is sent anywhere — it only shapes the response steps this tool recommends next.</p>
+    <div class="card">
+      <h3>What has happened</h3>
+      ${row('threatened','Someone has threatened to share intimate images or video')}
+      ${row('shared','Images or video have already been shared or posted')}
+      ${row('groupchat','Content is circulating in a group chat or messaging app')}
+      ${row('unsure',"I don't know the full extent yet")}
+      ${row('knownPerson','The person responsible is known to me')}
+      ${row('minorInvolved','This involves a person under 18')}
+      <div class="flag-note ${a.minorInvolved?'show':''}" id="minorNote">
+        This case involves a minor. This prototype's general NCII pathway is not the correct route — such cases must go directly to a specialised child-protection channel (e.g. police Child Protection desk / relevant government child-helpline) rather than the general adult referral steps shown further on.
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <span></span>
+      <button class="btn" onclick="next()">Continue to Evidence Record →</button>
+    </div>
+  `;
+}
+
+// ---------- STEP 2 ----------
+function viewEvidence(){
+  const rows = state.evidence.map(e=>`
+    <tr>
+      <td>${e.id}</td>
+      <td>${e.desc}<br><span style="color:var(--ink-soft);font-size:11.5px">${e.platform} · ${e.when||'date not given'}</span></td>
+      <td class="hash">${e.hash.slice(0,16)}…</td>
+      <td style="font-size:11.5px;color:var(--ink-soft)">${fmtTime(e.loggedAt)}</td>
+    </tr>`).join('');
+  return `
+    <div class="eyebrow">STEP 2 OF 5</div>
+    <h1>Evidence Record &amp; Integrity</h1>
+    <p class="lede">Each entry gets a real SHA-256 fingerprint of the record you log, computed in your browser, plus a timestamp — so tampering after the fact becomes detectable. This demonstrates the integrity-logging concept; it does not by itself establish legal admissibility.</p>
+    <div class="card">
+      <h3>Add an evidence entry</h3>
+      <div class="field">
+        <label>Description (what it is, where you found it)</label>
+        <textarea id="evDesc" placeholder="e.g. Screenshot of post on profile 'X', showing image shared on 5 Sept at 9:40pm"></textarea>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Platform</label>
+          <select id="evPlatform">
+            <option>Facebook</option><option>Messenger</option><option>WhatsApp</option>
+            <option>TikTok</option><option>Instagram</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Date/time it occurred (optional)</label>
+          <input type="text" id="evWhen" placeholder="e.g. 5 Sept 2026, 9:40pm">
+        </div>
+      </div>
+      <button class="btn" id="addEvidenceBtn">+ Add to evidence log</button>
+      <div class="status-line" id="hashStatus"></div>
+    </div>
+    <div class="card">
+      <h3>Evidence log (${state.evidence.length})</h3>
+      ${state.evidence.length ? `
+        <table>
+          <tr><th>ID</th><th>Record</th><th>SHA-256</th><th>Logged at</th></tr>
+          ${rows}
+        </table>` : `<div class="empty">No evidence logged yet.</div>`}
+    </div>
+    <div class="nav-buttons">
+      <button class="btn secondary" onclick="back()">← Back</button>
+      <button class="btn" onclick="next()">Continue to Timeline →</button>
+    </div>
+  `;
+}
+
+// ---------- STEP 3 ----------
+function buildTimeline(){
+  const a = state.assessment;
+  const items = [];
+  items.push({t:'Preserve what you already have', b:'Evidence entries logged so far: '+state.evidence.length+'. Keep original files/screenshots — do not edit or crop before logging.'});
+  if(a.shared || a.groupchat){
+    items.push({t:'Request platform takedown', b:'File a report directly with the platform(s) where content appeared, citing non-consensual intimate imagery policy.', urgent:true});
+  }
+  if(a.threatened && !a.shared){
+    items.push({t:'Preserve the threat itself', b:'Screenshot the threat/message before it can be deleted — this is time-sensitive evidence.', urgent:true});
+  }
+  items.push({t:'File a report with Police Cyber Support for Women & Children (PCSW)', b:'Bring the evidence log from Step 2. A GD (General Diary) or formal complaint can be filed citing the Cyber Security Ordinance 2025.'});
+  items.push({t:'Seek legal aid', b:'Approach a legal aid organisation or the National Legal Aid Services Organisation (NLASO) for guidance on remedies and representation.'});
+  if(a.minorInvolved){
+    items.unshift({t:'Redirect to child-protection channel', b:'This case should be routed to the specialised child-protection pathway, not handled through the general steps below.', urgent:true});
+  }
+  if(!a.threatened && !a.shared && !a.groupchat && !a.unsure){
+    items.unshift({t:'Complete Step 1', b:'Select what has happened so this timeline can be tailored to your situation.'});
+  }
+  items.push({t:'Compile a case brief', b:'Move to Step 4 to generate a structured record connecting your assessment, evidence, and these steps.'});
+  return items;
+}
+
+function viewTimeline(){
+  const items = buildTimeline();
+  const html = items.map((it,i)=>`
+    <div class="tl-item ${it.urgent?'urgent':''}">
+      <div class="tl-dot">${i+1}</div>
+      <div class="tl-title">${it.t}${it.urgent?'<span class="pill">Time-sensitive</span>':''}</div>
+      <div class="tl-body">${it.b}</div>
+    </div>`).join('');
+  return `
+    <div class="eyebrow">STEP 3 OF 5</div>
+    <h1>Incident Timeline</h1>
+    <p class="lede">Generated from your Step 1 answers and current evidence log — not a fixed script. This is guidance on the response pathway, not a substitute for advice from a lawyer or PCSW officer.</p>
+    <div class="card">
+      <h3>Recommended response path</h3>
+      <div class="timeline">${html}</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn secondary" onclick="back()">← Back</button>
+      <button class="btn" onclick="next()">Continue to Case Brief →</button>
+    </div>
+  `;
+}
+
+// ---------- STEP 4 ----------
+function composeBrief(filterKeys){
+  const a = state.assessment;
+  const lines = [];
+  lines.push('NCII RESPONSE NAVIGATOR — CASE BRIEF');
+  lines.push('Generated: '+fmtTime(new Date()));
+  lines.push('='.repeat(46));
+  lines.push('');
+  if(!filterKeys || filterKeys.includes('assessment')){
+    lines.push('1. SITUATION ASSESSMENT');
+    lines.push('- Threatened to share: '+(a.threatened?'Yes':'No'));
+    lines.push('- Already shared/posted: '+(a.shared?'Yes':'No'));
+    lines.push('- Circulating in group chat: '+(a.groupchat?'Yes':'No'));
+    lines.push('- Full extent unknown: '+(a.unsure?'Yes':'No'));
+    lines.push('- Responsible person known to survivor: '+(a.knownPerson?'Yes':'No'));
+    lines.push('- Minor involved: '+(a.minorInvolved?'YES — route to child-protection channel':'No'));
+    lines.push('');
+  }
+  if(!filterKeys || filterKeys.includes('evidence')){
+    lines.push('2. EVIDENCE LOG'+(filterKeys&&filterKeys.includes('redact')?' (descriptions redacted)':''));
+    if(state.evidence.length===0){ lines.push('- No entries logged.'); }
+    state.evidence.forEach(e=>{
+      const desc = (filterKeys&&filterKeys.includes('redact')) ? '[redacted — see original evidence log]' : e.desc;
+      lines.push(`- ${e.id} | ${e.platform} | ${e.when||'date not given'}`);
+      lines.push(`  Description: ${desc}`);
+      lines.push(`  SHA-256: ${e.hash}`);
+      lines.push(`  Logged at: ${fmtTime(e.loggedAt)}`);
+    });
+    lines.push('');
+  }
+  if(!filterKeys || filterKeys.includes('timeline')){
+    lines.push('3. RECOMMENDED RESPONSE PATH');
+    buildTimeline().forEach((it,i)=>{ lines.push(`${i+1}. ${it.t}${it.urgent?' [TIME-SENSITIVE]':''} — ${it.b}`); });
+    lines.push('');
+  }
+  lines.push('-'.repeat(46));
+  lines.push('Prototype note: this brief demonstrates the case-compilation workflow.');
+  lines.push('It is not a substitute for advice from a lawyer or PCSW officer.');
+  return lines.join('\n');
+}
+
+function viewBrief(){
+  const preview = composeBrief();
+  return `
+    <div class="eyebrow">STEP 4 OF 5</div>
+    <h1>Case Brief Generation</h1>
+    <p class="lede">Everything from Steps 1–3 compiled into one structured record you can download and bring to PCSW or a legal aid lawyer.</p>
+    <div class="card">
+      <h3>Preview</h3>
+      <div class="brief-preview">${preview.replace(/</g,'&lt;')}</div>
+      <button class="btn" style="margin-top:14px" id="downloadFullBtn">Generate case pack (.txt)</button>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn secondary" onclick="back()">← Back</button>
+      <button class="btn" onclick="next()">Continue to Selective Disclosure →</button>
+    </div>
+  `;
+}
+
+// ---------- STEP 5 ----------
+function viewDisclosure(){
+  const d = state.disclosure;
+  const row = (key,label,helper) => `
+    <div class="check-row" data-dkey="${key}">
+      <input type="checkbox" id="d_${key}" ${d[key]?'checked':''}>
+      <label for="d_${key}"><strong>${label}</strong><br><span style="color:var(--ink-soft);font-size:12px">${helper}</span></label>
+    </div>`;
+  return `
+    <div class="eyebrow">STEP 5 OF 5</div>
+    <h1>Selective Disclosure</h1>
+    <p class="lede">Not every recipient needs every detail. Choose what goes into the package you hand over, so control over the disclosure of sensitive content stays with the survivor.</p>
+    <div class="card">
+      <h3>Include in this package</h3>
+      ${row('police','Police / PCSW channel','Full assessment, evidence log, and recommended steps')}
+      ${row('legal','Legal aid lawyer','Full assessment, evidence log, and recommended steps')}
+      ${row('platform','Platform takedown notice','Evidence log only — no personal assessment details')}
+      ${row('keepPrivate','Redact evidence descriptions','Keep hashes and IDs, remove written descriptions from the export')}
+    </div>
+    <div class="card">
+      <h3>Package preview</h3>
+      <div class="brief-preview" id="disclosurePreview">${buildDisclosurePreview().replace(/</g,'&lt;')}</div>
+      <button class="btn" style="margin-top:14px" id="downloadSelectedBtn">Generate selected package (.txt)</button>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn secondary" onclick="back()">← Back</button>
+      <span></span>
+    </div>
+  `;
+}
+
+function buildDisclosurePreview(){
+  const d = state.disclosure;
+  const keys = [];
+  if(d.police || d.legal){ keys.push('assessment'); }
+  keys.push('evidence');
+  if(d.police || d.legal){ keys.push('timeline'); }
+  if(d.keepPrivate){ keys.push('redact'); }
+  return composeBrief(keys.length?keys:['evidence']);
+}
+
+function download(filename, text){
+  const blob = new Blob([text], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ---------- EVENT WIRING ----------
+function wireEvents(){
+  document.querySelectorAll('.check-row[data-key]').forEach(row=>{
+    const key = row.dataset.key;
+    const box = row.querySelector('input');
+    row.addEventListener('click', (e)=>{
+      if(e.target.tagName!=='INPUT'){ box.checked = !box.checked; }
+      state.assessment[key] = box.checked;
+      const note = document.getElementById('minorNote');
+      if(note) note.classList.toggle('show', state.assessment.minorInvolved);
+    });
+  });
+
+  document.querySelectorAll('.check-row[data-dkey]').forEach(row=>{
+    const key = row.dataset.dkey;
+    const box = row.querySelector('input');
+    row.addEventListener('click', (e)=>{
+      if(e.target.tagName!=='INPUT'){ box.checked = !box.checked; }
+      state.disclosure[key] = box.checked;
+      document.getElementById('disclosurePreview').innerHTML = buildDisclosurePreview().replace(/</g,'&lt;');
+    });
+  });
+
+  const addBtn = document.getElementById('addEvidenceBtn');
+  if(addBtn){
+    addBtn.addEventListener('click', async ()=>{
+      const desc = document.getElementById('evDesc').value.trim();
+      const platform = document.getElementById('evPlatform').value;
+      const when = document.getElementById('evWhen').value.trim();
+      if(!desc){ document.getElementById('hashStatus').textContent = 'Add a description before logging.'; return; }
+      document.getElementById('hashStatus').textContent = 'Computing SHA-256…';
+      const hash = await sha256(desc+platform+when+Date.now());
+      const id = 'E-'+String(state.evidence.length+1).padStart(3,'0');
+      state.evidence.push({id, desc, platform, when, hash, loggedAt:new Date()});
+      renderMain();
+    });
+  }
+
+  const dlFull = document.getElementById('downloadFullBtn');
+  if(dlFull) dlFull.addEventListener('click', ()=> download('case-brief-full.txt', composeBrief()));
+
+  const dlSel = document.getElementById('downloadSelectedBtn');
+  if(dlSel) dlSel.addEventListener('click', ()=> download('case-brief-selected.txt', buildDisclosurePreview()));
+}
+
+render();
+</script>
+</body>
+</html>
