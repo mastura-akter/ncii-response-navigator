@@ -63,7 +63,7 @@ If you are a survivor of NCII abuse in Bangladesh, you may find these official c
 
 ## License
 
-[To be added]
+MIT Licence 
 
 ---
 
