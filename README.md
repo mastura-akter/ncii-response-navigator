@@ -10,7 +10,7 @@ This prototype implements the framework developed in the research project:
 
 **"A Victim-Centred Legal Response Framework for Non-Consensual Intimate Image Abuse in Bangladesh"**
 
-The research identifies that Bangladesh's legal and institutional response to NCII abuse is fragmented — survivors must navigate reporting, evidence preservation, platform response, and institutional processes separately. This prototype demonstrates a coordinated, victim-controlled pathway addressing that gap, informed by comparative practice in the UK and India.
+The research identifies that Bangladesh's legal and institutional response to NCII abuse is fragmented — survivors must navigate reporting, evidence preservation, platform response, and institut[...]
 
 ---
 
@@ -18,7 +18,7 @@ The research identifies that Bangladesh's legal and institutional response to NC
 
 1. **Situation Assessment** — structured intake questions about what has happened
 2. **Evidence Record & Integrity** — logs evidence entries and generates a real SHA-256 hash for each entry, computed client-side in the browser
-3. **Incident Timeline** — generates a recommended response pathway based on the assessment and evidence log, referencing applicable Bangladesh channels (Police Cyber Support for Women & Children, Legal Aid, the Cyber Security Act 2026)
+3. **Incident Timeline** — generates a recommended response pathway based on the assessment and evidence log, referencing applicable Bangladesh channels (Police Cyber Support for Women & Childre[...]
 4. **Case Brief Generation** — compiles the above into one structured, downloadable record
 5. **Selective Disclosure** — lets the user choose which information is included in packages prepared for Police/PCSW, a lawyer, or a platform report
 
@@ -38,7 +38,7 @@ The research identifies that Bangladesh's legal and institutional response to NC
 
 **Mastura Akter**, LL.M., Department of Law, Uttara University (48th Batch)
 
-Sole author of the underlying research and framework. This is a solo project — the research, framework, and design decisions are the author's own; the prototype's code was built with AI-assisted development.
+Sole author of the underlying research and framework. This is a solo project — the research, framework, and design decisions are the author's own; the prototype's code was built with AI-assisted[...]
 
 ---
 
@@ -47,6 +47,22 @@ Sole author of the underlying research and framework. This is a solo project —
 ✅ Submitted as part of a research poster to Uttara University for the Bangladesh Innovation Fair 2026  
 ✅ Selected to represent the university at the national round (September 2026)  
 💻 This prototype is an implementation layer built after the original poster submission, to demonstrate the framework in practice
+
+---
+
+## Technologies Used
+
+- HTML, CSS, and vanilla JavaScript (no frameworks)
+- Web Crypto API (browser-native) for SHA-256 hash generation
+- Hosted via GitHub Pages — fully client-side, no backend or database
+
+---
+
+## Citation
+
+If referencing this prototype in academic work:
+
+Akter, M. (2026). NCII Response Navigator: A Victim-Centred LegalTech Prototype for Non-Consensual Intimate Image Abuse in Bangladesh [Software prototype]. Uttara University. https://mastura-akter.github.io/ncii-response-navigator/
 
 ---
 
