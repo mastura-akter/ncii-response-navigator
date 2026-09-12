@@ -10,7 +10,7 @@ This prototype implements the framework developed in the research project:
 
 **"A Victim-Centred Legal Response Framework for Non-Consensual Intimate Image Abuse in Bangladesh"**
 
-The research identifies that Bangladesh's legal and institutional response to NCII abuse is fragmented — survivors must navigate reporting, evidence preservation, platform response, and institutional accountability mechanisms. This prototype demonstrates how structured digital tools can support victims in documenting, preserving evidence, and preparing comprehensive case briefs for submission to police, lawyers, and platform reporting systems.
+The research identifies that Bangladesh's legal and institutional response to NCII abuse is fragmented — survivors must navigate reporting, evidence preservation, platform response, and institutional processes separately.
 
 ---
 
@@ -18,7 +18,7 @@ The research identifies that Bangladesh's legal and institutional response to NC
 
 1. **Situation Assessment** — structured intake questions about what has happened
 2. **Evidence Record & Integrity** — logs evidence entries and generates a real SHA-256 hash for each entry, computed client-side in the browser
-3. **Incident Timeline** — generates a recommended response pathway based on the assessment and evidence log, referencing applicable Bangladesh channels (Police Cyber Support for Women & Children, National Legal Aid Services, platform reporting processes)
+3. **Incident Timeline** — generates a recommended response pathway based on the assessment and evidence log, referencing applicable Bangladesh channels (Police Cyber Support for Women & Children, Legal Aid, the Cyber Security Act 2026)
 4. **Case Brief Generation** — compiles the above into one structured, downloadable record
 5. **Selective Disclosure** — lets the user choose which information is included in packages prepared for Police/PCSW, a lawyer, or a platform report
 
@@ -38,7 +38,7 @@ The research identifies that Bangladesh's legal and institutional response to NC
 
 **Mastura Akter**, LL.M., Department of Law, Uttara University (48th Batch)
 
-Sole author of the underlying research and framework. This is a solo project — the research, framework, and design decisions are the author's own. The prototype's code was built with AI-assisted development tools, but all design, research direction, and validation methodology are the author's work.
+Sole author of the underlying research and framework. This is a solo project — the research, framework, and design decisions are the author's own. The prototype's code was built with AI-assisted development.
 
 ---
 
