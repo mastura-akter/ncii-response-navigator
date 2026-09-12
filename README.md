@@ -10,7 +10,7 @@ This prototype implements the framework developed in the research project:
 
 **"A Victim-Centred Legal Response Framework for Non-Consensual Intimate Image Abuse in Bangladesh"**
 
-The research identifies that Bangladesh's legal and institutional response to NCII abuse is fragmented — survivors must navigate reporting, evidence preservation, platform response, and institutional processes separately.
+The research identifies that Bangladesh's legal and institutional response to NCII abuse is fragmented — survivors must navigate reporting, evidence documentation and integrity recording, platform response, and institutional processes separately.
 
 ---
 
@@ -36,9 +36,12 @@ The research identifies that Bangladesh's legal and institutional response to NC
 
 ## Author
 
-**Mastura Akter**, LL.M., Department of Law, Uttara University (48th Batch)
+**Mastura Akter**
 
-Sole author of the underlying research and framework. This is a solo project — the research, framework, and design decisions are the author's own. The prototype's code was built with AI-assisted development.
+Department of Law,
+Uttara University
+
+Sole author of the underlying research and framework. The research, framework, and design decisions are the author's own. The prototype's code was built with AI-assisted development.
 
 ---
 
@@ -60,9 +63,12 @@ Sole author of the underlying research and framework. This is a solo project —
 
 ## Citation
 
-If referencing this prototype in academic work:
+If referencing this prototype in academic work, please cite:
 
-Akter, M. (2026). NCII Response Navigator: A Victim-Centred LegalTech Prototype for Non-Consensual Intimate Image Abuse in Bangladesh [Software prototype]. Uttara University. https://mastura-akter.github.io/ncii-response-navigator/
+Akter, M. (2026). *NCII Response Navigator: A Victim-Centred LegalTech Prototype for Non-Consensual Intimate Image Abuse in Bangladesh* [Software prototype]. Uttara University. 
+
+Project URL:
+<https://mastura-akter.github.io/ncii-response-navigator/>
 
 ---
 
@@ -84,4 +90,7 @@ MIT License
 
 ---
 
-**Built for justice. Built with care.**
+**A Research-Based LegalTech Prototype**
+
+*Developed to demonstrate a victim-centred digital response workflow.*
+
