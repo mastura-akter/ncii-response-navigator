@@ -10,7 +10,7 @@ This prototype implements the framework developed in the research project:
 
 **"A Victim-Centred Legal Response Framework for Non-Consensual Intimate Image Abuse in Bangladesh"**
 
-The research identifies that Bangladesh's legal and institutional response to NCII abuse is fragmented — survivors must navigate reporting, evidence documentation and integrity recording, platform response, and institutional processes separately.
+The research identifies that Bangladesh's legal and institutional response to NCII abuse is fragmented — survivors must navigate reporting, evidence documentation and integrity recording, platform reporting, and legal/police channels in isolation. This prototype demonstrates one integrated entry point that guides survivors through a structured response workflow.
 
 ---
 
@@ -18,9 +18,28 @@ The research identifies that Bangladesh's legal and institutional response to NC
 
 1. **Situation Assessment** — structured intake questions about what has happened
 2. **Evidence Record & Integrity** — logs evidence entries and generates a real SHA-256 hash for each entry, computed client-side in the browser
-3. **Incident Timeline** — generates a recommended response pathway based on the assessment and evidence log, referencing applicable Bangladesh channels (Police Cyber Support for Women & Children, Legal Aid, the Cyber Security Act 2026)
+3. **Incident Timeline** — generates a recommended response pathway based on the assessment and evidence log, referencing applicable Bangladesh channels (Police Cyber Support for Women & Children, legal aid, platform reporting)
 4. **Case Brief Generation** — compiles the above into one structured, downloadable record
 5. **Selective Disclosure** — lets the user choose which information is included in packages prepared for Police/PCSW, a lawyer, or a platform report
+
+---
+
+## Prototype Screenshots
+
+### Step 1 — Situation Assessment
+![Situation Assessment](screenshots/Screenshot_1_Situation_Assessment.png)
+
+### Step 2 — Evidence Record & Integrity
+![Evidence Record & Integrity](screenshots/Screenshot_2_Evidence_Record.png)
+
+### Step 3 — Incident Timeline
+![Incident Timeline](screenshots/Screenshot_3_Incident_Timeline.png)
+
+### Step 4 — Case Brief Generation
+![Case Brief Generation](screenshots/Screenshot_4_Case_Brief.png)
+
+### Step 5 — Selective Disclosure
+![Selective Disclosure](screenshots/Screenshot_5_Selective_Disclosure.png)
 
 ---
 
@@ -93,4 +112,3 @@ MIT License
 **A Research-Based LegalTech Prototype**
 
 *Developed to demonstrate a victim-centred digital response workflow.*
-
